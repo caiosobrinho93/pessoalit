@@ -1,51 +1,48 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import useStore from './store/useStore';
-import TaskList from './components/TaskList';
-import AddTaskForm from './components/AddTaskForm';
-import { ListTodo } from 'lucide-react';
+import Navigation from './components/Navigation';
+import TasksView from './components/TasksView';
+import ShoppingView from './components/ShoppingView';
+import NotesView from './components/NotesView';
+import FinanceView from './components/FinanceView';
 
 function App() {
-  const { tasks, addTask, toggleTask, deleteTask } = useStore();
+  const { view } = useStore();
+
+  const renderView = () => {
+    switch (view) {
+      case 'tasks': return <TasksView />;
+      case 'shopping': return <ShoppingView />;
+      case 'notes': return <NotesView />;
+      case 'finance': return <FinanceView />;
+      default: return <TasksView />;
+    }
+  };
 
   return (
-    <div className="min-h-screen pb-20 px-4">
-      <header className="max-w-xl mx-auto pt-16 mb-12 text-center">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="inline-flex p-3 bg-primary/10 text-primary rounded-2xl mb-6"
-        >
-          <ListTodo size={32} />
-        </motion.div>
-        
-        <h1 className="text-4xl font-black text-white tracking-tight">
-          Minhas <span className="text-primary">Tarefas</span>
-        </h1>
-        <p className="text-gray-500 mt-2 text-sm uppercase tracking-widest font-semibold">
-          Persistência Permanente
-        </p>
-      </header>
+    <div className="min-h-screen bg-dark overflow-x-hidden selection:bg-primary/30">
+      {/* Background Decorative Elements */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/5 blur-[120px] rounded-full animate-float" />
+        <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-secondary/5 blur-[100px] rounded-full" />
+      </div>
 
-      <main className="max-w-xl mx-auto">
-        <div className="bg-[#111111]/50 backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 md:p-8 shadow-2xl">
-          <div className="mb-8">
-            <AddTaskForm onAdd={addTask} />
-          </div>
-
-          <div className="min-h-[400px]">
-            <TaskList 
-              tasks={tasks} 
-              onToggle={toggleTask} 
-              onDelete={deleteTask} 
-            />
-          </div>
-        </div>
+      <main className="max-w-2xl mx-auto px-4 pt-8 md:pt-16 min-h-screen">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={view}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          >
+            {renderView()}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
-      <footer className="mt-20 text-center opacity-20 text-[10px] uppercase tracking-widest font-bold">
-        Personal Task Manager &copy; 2026
-      </footer>
+      <Navigation />
     </div>
   );
 }
