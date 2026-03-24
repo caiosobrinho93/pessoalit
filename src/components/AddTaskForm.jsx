@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 
 const AddTaskForm = ({ onAdd }) => {
@@ -7,40 +6,29 @@ const AddTaskForm = ({ onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.trim() && title.length <= 100) {
-      onAdd(title);
+    if (title.trim()) {
+      onAdd(title.trim());
       setTitle('');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8">
+    <form onSubmit={handleSubmit} className="px-4">
       <div className="relative group">
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="O que você precisa fazer hoje?"
-          maxLength={100}
-          className="w-full bg-card border border-white/5 rounded-2xl py-4 pl-5 pr-14 text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300 shadow-xl"
+          placeholder="O que precisa ser feito hoje?"
+          className="w-full bg-card border border-white/5 rounded-2xl p-5 pl-6 pr-16 text-white text-lg font-semibold placeholder:text-slate-700 focus:border-primary/50 focus:shadow-[0_0_30px_rgba(244,115,33,0.1)] outline-none transition-all"
         />
-        
         <button
           type="submit"
-          disabled={!title.trim() || title.length > 100}
-          className="absolute right-2 top-2 bottom-2 aspect-square bg-primary text-dark rounded-xl flex items-center justify-center font-bold shadow-lg disabled:opacity-30 disabled:grayscale transition-all duration-300 hover:scale-105 active:scale-95"
+          disabled={!title.trim()}
+          className="absolute right-2 top-2 bottom-2 bg-primary text-dark rounded-xl px-4 flex items-center justify-center hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 transition-all shadow-lg"
         >
           <Plus size={24} strokeWidth={3} />
         </button>
-      </div>
-      
-      <div className="flex justify-between mt-2 px-1">
-        <p className="text-[10px] text-gray-600 uppercase tracking-widest font-bold">
-          Dica: Conclua tudo para ganhar bônus de 100 créditos!
-        </p>
-        <span className={`text-[10px] font-mono ${title.length > 90 ? 'text-orange-500' : 'text-gray-600'}`}>
-          {title.length}/100
-        </span>
       </div>
     </form>
   );

@@ -14,7 +14,7 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-20 glass border-t border-white/5 z-50 px-4">
+    <nav className="fixed bottom-4 left-4 right-4 h-20 bg-card/80 backdrop-blur-lg border border-white/5 rounded-[2rem] z-50 px-4 shadow-2xl">
       <div className="max-w-xl mx-auto h-full flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -24,20 +24,20 @@ const Navigation = () => {
             <button
               key={item.id}
               onClick={() => setView(item.id)}
-              className="relative flex flex-col items-center justify-center gap-1 group w-16"
+              className="relative flex flex-col items-center justify-center gap-1 group w-16 min-h-[50px]"
             >
               {isActive && (
                 <motion.div
                   layoutId="nav-active"
-                  className="absolute inset-0 bg-primary/10 rounded-2xl -z-10"
+                  className="absolute inset-x-0 -top-1 h-1 bg-primary rounded-full"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
               <Icon 
-                size={24} 
-                className={`transition-colors duration-300 ${isActive ? 'text-primary' : 'text-slate-500 group-hover:text-slate-300'}`} 
+                size={22} 
+                className={`transition-colors duration-300 ${isActive ? 'text-primary' : 'text-slate-600 group-hover:text-slate-400'}`} 
               />
-              <span className={`text-[10px] font-bold uppercase tracking-wider ${isActive ? 'text-primary' : 'text-slate-500'}`}>
+              <span className={`text-[9px] font-black uppercase tracking-widest ${isActive ? 'text-primary' : 'text-slate-600'}`}>
                 {item.label}
               </span>
             </button>

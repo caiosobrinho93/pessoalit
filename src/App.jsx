@@ -21,21 +21,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-dark overflow-x-hidden selection:bg-primary/30">
-      {/* Background Decorative Elements */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/5 blur-[120px] rounded-full animate-float" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-secondary/5 blur-[100px] rounded-full" />
-      </div>
-
-      <main className="max-w-2xl mx-auto px-4 pt-8 md:pt-16 min-h-screen">
+    <div className="min-h-screen bg-dark overflow-x-hidden p-0 m-0 font-sans selection:bg-primary/30">
+      <main className="max-w-2xl mx-auto pt-8 pb-32">
         <AnimatePresence mode="wait">
           <motion.div
             key={view}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
           >
             {renderView()}
           </motion.div>
